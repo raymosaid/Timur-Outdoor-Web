@@ -77,9 +77,6 @@ export default function Header({
                 <div>{user?.user_role ? capitalizeFirstLetter(user.user_role) : "Pegawai"}</div>
               </div>
             </div>
-            <div>
-              <Bell />
-            </div>
           </div>
         </div>
       </div>
