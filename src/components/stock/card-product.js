@@ -3,7 +3,7 @@ import { formatCurrency } from "@/lib/utils";
 import { EditProduct } from "@/components/stock/edit-product"
 import { TooltipProduct } from "@/components/tooltip-product"
 
-const CardProduct = ({ product }) => {
+const CardProduct = ({ product, setListProduct }) => {
   return (
     <div className="border border-primary/10 shadow-lg bg-white p-6 rounded-lg flex flex-col gap-4">
       <div className="relative aspect-[1/1] rounded-lg">
@@ -23,7 +23,7 @@ const CardProduct = ({ product }) => {
         <p>Harga: {formatCurrency(product.rent_price)} / Hari</p>
       </div>
       <div className="flex w-full items-center gap-2 mt-auto">
-        <EditProduct product={product} />
+        <EditProduct product={product} setListProduct={setListProduct} />
         <TooltipProduct product={product} />
       </div>
     </div>

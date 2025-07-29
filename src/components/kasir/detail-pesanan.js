@@ -269,20 +269,6 @@ export const DetailPesanan = ({
                       placeholder="KTP / SIM / KTM / NPWP"
                     />
                   </div>
-                  {/* <div>
-                    <Label htmlFor="down_payment">Down Payment</Label>
-                    <Input
-                      type="text"
-                      id="down_payment"
-                      name="down_payment"
-                      value={formatCurrency(downPayment)}
-                      onChange={(e) => {
-                        let formattedValue = parseInt(e.target.value.replace(/[^0-9]/g, '') || 0);
-                        setDownPayment(formattedValue)
-                      }}
-                      placeholder="Down Payment"
-                    />
-                  </div> */}
                   <div>
                     <Label htmlFor="discount">Diskon</Label>
                     <Input
@@ -297,25 +283,6 @@ export const DetailPesanan = ({
                       placeholder="Diskon"
                     />
                   </div>
-                  {/* <div>
-                    <Label htmlFor="payment_method">Metode Pembayaran</Label>
-                    <Input
-                      type="text"
-                      id="payment_method"
-                      name="payment_method"
-                      defaultValue={paymentMethod}
-                      onChange={(e) => setPaymentMethod(e.target.value)}
-                      placeholder="Metode Pembayaran" />
-                    <Select value={paymentMethod} onValueChange={setPaymentMethod}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Metode Pembayaran" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="CASH">CASH</SelectItem>
-                        <SelectItem value="QRIS">QRIS</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div> */}
                   <Input
                     name="total_amount"
                     value={totalAmount}
@@ -467,33 +434,6 @@ export const DetailPesanan = ({
                     {pending ? "Loading..." : "Selesaikan Pembayaran"}
                   </Button>
                 </div>
-                {/* <PDFDownloadLink
-                  document={<NotaSewa />}
-                  fileName={`Nota Sewa Tanggal ${new Date()}`}
-                  // onClick={async() => {
-                  //   const blob = await pdf(<NotaSewa />).toBlob()
-                  //   setNotaPDF(blob)
-                    // const base64 = await new Promise((resolve, reject) => {
-                    //   const reader = new FileReader();
-                    //   reader.onloadend = () => resolve(reader.result.split(',')[1]);
-                    //   reader.onerror = reject;
-                    //   reader.readAsDataURL(blob);
-                    // });
-                    // console.log("base64", base64)
-                    // await fetch('http://localhost:3002/send', {
-                    //   method: 'POST',
-                    //   headers: { 'Content-Type': 'application/json' },
-                    //   body: JSON.stringify({
-                    //     to: "6282120746379",
-                    //     base64data: base64,
-                    //     message: "Send Media",
-                    //     filename: "Nota Penyewaan",
-                    //   }),
-                    // });
-                  // }}
-                >
-                  {({ loading }) => (loading ? 'Loading document...' : 'Kirim Nota')}
-                </PDFDownloadLink> */}
                 
               </div>
             </div>

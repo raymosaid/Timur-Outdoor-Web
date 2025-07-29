@@ -199,19 +199,6 @@ export default function Page() {
               <Button variant={!!isSelling ? "" : "outline"}  className={`rounded-none rounded-r-lg`} onClick={() => setIsSelling(true)}>Jual</Button>
             </div>
           </div>
-          {/* Setting Data */}
-          <div className="flex gap-[40px]">
-            <Button className="">
-              Paling Laku
-              <ListFilter />
-            </Button>
-            <div className="flex overflow-x-auto">
-              <Button variant="outline" className="rounded-none rounded-l-md">Tenda</Button>
-              <Button variant="outline" className="rounded-none">Carrier</Button>
-              <Button variant="outline" className="rounded-none">Penerangan</Button>
-              <Button variant="outline" className="rounded-none rounded-r-md">Alat Masak</Button>
-            </div>
-          </div>
           {/* Items */}
           <div className="grid sm:grid-cols- md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 gap-4 overflow-y-auto">
             {displayProducts.map((item, index) => (

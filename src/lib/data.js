@@ -590,3 +590,30 @@ export const useSellProductCatalogue = () => {
     }
   })
 }
+
+export const updatedSellTransactionDetail = async(detail) => {
+  const updatedData = {
+    id: detail.id,
+    name: detail.name,
+    created_at: detail.created_at,
+    phone_number: detail.phone_number,
+    note: detail.note,
+    discount: detail.discount
+  }
+  const supabase = await createClient()
+  const { data, error } = await supabase
+    .from('sell_transactions')
+    .update(updatedData)
+    .eq('id', detail.id)
+    .select('*, sell_items (*, product (*))')
+  return { data, error }
+}
+
+export const deleteProduct = async(product) => {
+  const supabase = await createClient()
+  const { error } = await supabase
+    .from('products')
+    .delete()
+    .eq('id', product.id)
+  return { error }
+}

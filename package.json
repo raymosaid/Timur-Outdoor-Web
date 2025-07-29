@@ -4,8 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "ngrok": "ngrok http 3000",
-    "grok": "ngrok http --url=enormous-unicorn-secondly.ngrok-free.app 3000",
     "build": "next build --no-lint",
     "start": "next start",
     "lint": "next lint"

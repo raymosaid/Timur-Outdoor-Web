@@ -44,12 +44,11 @@ export default function Page() {
           >
             <Button>Tambah Produk Baru</Button>
           </AddProductDialogue>
-          <Button>Tambah Produk Lama</Button>
         </div>
         {/* <div className="flex flex-wrap gap-6"> */}
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 max-h-full overflow-y-auto">
           {listProduct.length > 0 && listProduct.map(item  => (
-            <CardProduct key={item.id} product={item} />
+            <CardProduct key={item.id} product={item} setListProduct={setListProduct} />
           ))}
         </div>
       </div>

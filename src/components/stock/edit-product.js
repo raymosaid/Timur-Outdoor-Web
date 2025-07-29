@@ -6,12 +6,13 @@ import { Input } from "../ui/input"
 import { formatCurrency, getImageData } from "@/lib/utils"
 import { useRef, useState } from "react"
 import { useToast } from "@/hooks/use-toast"
-import { updateProduct } from "@/lib/data"
+import { deleteProduct, fetchProductList, updateProduct } from "@/lib/data"
 import { createClient } from "@/utils/supabase/client"
 
-export const EditProduct = ({ product }) => {
+export const EditProduct = ({ product, setListProduct }) => {
   const { toast } = useToast()
   const [pending, setPending] = useState(false)
+  const [open, setOpen] = useState(false)
 
   const imageInputRef = useRef()
   const [imagePreview, setImagePreview] = useState(null)
@@ -19,7 +20,7 @@ export const EditProduct = ({ product }) => {
   const [name, setName] = useState(product.name)
   const [category, setCategory] = useState(product.category)
   const [rentPrice, setRentPrice] = useState(product.rent_price)
-  const [sellPrice, setSellPrice] = useState(product.sellPrice)
+  const [sellPrice, setSellPrice] = useState(product.sell_price)
   const [jumlahBarang, setJumlahBarang] = useState(product.jumlah_barang)
   const [barangTersedia, setBarangTersedia] = useState(product.barang_tersedia)
   
@@ -27,7 +28,7 @@ export const EditProduct = ({ product }) => {
     {name: "name", title: "Nama Produk", type: "text", placeholder: "Nama Produk", defaultValue: product.name, value: name, setState: setName},
     {name: "category", title: "Kategori", type: "text", placeholder: "Kategori", defaultValue: product.category, value: category, setState: setCategory},
     {name: "rent_price", title: "Harga Sewa", type: "number", placeholder: formatCurrency(20000), defaultValue: product.rent_price, value: rentPrice, setState: setRentPrice},
-    {name: "sell_price", title: "Harga Jual", type: "number", placeholder: formatCurrency(20000), defaultValue: product.sellPrice, value: sellPrice, setState: setSellPrice},
+    {name: "sell_price", title: "Harga Jual", type: "number", placeholder: formatCurrency(20000), defaultValue: product.sell_price??0, value: sellPrice, setState: setSellPrice},
     {name: "jumlah_barang", title: "Jumlah Barang", type: "number", placeholder: "Jumlah Barang", defaultValue: product.jumlah_barang, value: jumlahBarang, setState: setJumlahBarang},
   ]
 
@@ -69,12 +70,13 @@ export const EditProduct = ({ product }) => {
     }
 
     const { data, error } = await updateProduct(patchData, product)
-    console.log("Data Update", data)
     if (!error) {
       toast({
         title: "Edit Product Successful",
         description: "Produk telah berhasil diubah",
       })
+      fetchProductList(setListProduct, '')
+      setOpen(false)
     } else {
       toast({
         variant: "destructive",
@@ -85,8 +87,28 @@ export const EditProduct = ({ product }) => {
     setPending(false)
   }
 
+  const DeleteProduct = async() => {
+    setPending(true)
+    const {error} = await deleteProduct(product)
+    if (!error) {
+      toast({
+        title: "Delete Product Successful",
+        description: "Produk telah berhasil dihapus",
+      })
+      fetchProductList(setListProduct, '')
+      setOpen(false)
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Failed To Delete Product",
+        description: "Produk gagal dihapus"
+      })
+    }
+    setPending(false)
+  }
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="w-full">Edit</Button>
       </DialogTrigger>
@@ -143,9 +165,13 @@ export const EditProduct = ({ product }) => {
           </div>
         </div>
         <DialogFooter>
-          {/* <DialogClose>
-            <Button>Cancel</Button>
-          </DialogClose> */}
+          <Button
+            variant="destructive"
+            onClick={() => DeleteProduct()}
+            disabled={pending}
+          >
+            {!pending ? "Hapus Barang" : "Menyimpan..."}
+          </Button>
           <DialogClose>
             <Button type="submit" disabled={pending}>{!pending ? "Simpan Perubahan" : "Menyimpan..."}</Button>
           </DialogClose>

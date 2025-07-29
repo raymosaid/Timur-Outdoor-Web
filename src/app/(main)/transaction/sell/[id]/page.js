@@ -10,7 +10,8 @@ import { useEffect, useState } from "react"
 import { NotaTransaksiJual } from "@/lib/nota-jual"
 import { pdf } from "@react-pdf/renderer"
 import { useToast } from "@/hooks/use-toast"
-
+import { EditSellDetail } from "@/components/transaction/detail/edit-sell-detail"
+ 
 export default function Page() {
   const pathname = useParams()
   const transactionId = pathname.id
@@ -89,6 +90,8 @@ export default function Page() {
           {!isEdit && <Button onClick={() => setIsEdit(true)}><Pencil />Edit Transaksi</Button>}
         </div>
 
+        {!!transaction && !!isEdit && <EditSellDetail transaction={transaction} setIsEdit={setIsEdit} setTransaction={setTransaction}/>}
+
         {!isEdit &&  (
           <>
             {!!data ? (
@@ -115,20 +118,23 @@ export default function Page() {
             )}
           </>
         )}
-        <div className="flex gap-2 mt-auto">
-          <Button
-            variant="outline"
-            disabled={!transaction}
-            onClick={() => handlePrintNota()}
-          >
-            Print Nota
-          </Button>
-          <Button
-            variant="outline"
-            disabled={!transaction || !!pendingKirimNota}
-            onClick={() => handleKirimNota()}
-          >Kirim Nota</Button>
-        </div>
+
+        {!isEdit && (
+          <div className="flex gap-2 mt-auto">
+            <Button
+              variant="outline"
+              disabled={!transaction}
+              onClick={() => handlePrintNota()}
+            >
+              Print Nota
+            </Button>
+            <Button
+              variant="outline"
+              disabled={!transaction || !!pendingKirimNota}
+              onClick={() => handleKirimNota()}
+            >Kirim Nota</Button>
+          </div>
+        )}
       </div>
     </>
   )
