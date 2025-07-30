@@ -17,10 +17,20 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { LogOut } from "lucide-react";
 import { signOutAction } from "@/app/actions";
+import { useUserData } from "@/lib/data";
+import { useEffect, useState } from "react";
 
 
 export default function AppSidebar() {
   const pathname = usePathname()
+  const { data } = useUserData()
+  console.log("user", data)
+
+  const [restrictSideBar, setRestrictSideBar] = useState([])
+  useEffect(() => {
+    if(data?.user_role !== "owner") setRestrictSideBar(sidebarNavLinks.filter(item => item.name !== "Dashboard" && item.name !== "Atur Pegawai"))
+    else setRestrictSideBar(sidebarNavLinks)
+  }, [data])
 
   return (
     <Sidebar
@@ -40,7 +50,7 @@ export default function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {sidebarNavLinks.map((item) => (
+              {restrictSideBar.map((item) => (
                 <SidebarMenuItem key={item.name}>
                   <SidebarMenuButton
                     asChild

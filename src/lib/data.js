@@ -16,6 +16,13 @@ export const useUserData = () => {
     queryKey: [`userData`],
     queryFn: async() => {
       const { data: { user }, error } = await supabase.auth.getUser()
+      const { data: profiles } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
+        .single()
+      console.log("profile", profiles)
+      user.user_role = profiles.user_role
       if (error) console.error(error)
       else return user
     }

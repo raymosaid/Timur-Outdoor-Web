@@ -12,7 +12,6 @@ import { HeaderContext } from "@/app/(main)/provider";
 
 const listInputAddProduct = [
   {name: "name", title: "Nama Produk", type: "text", placeholder: "Nama Produk", defaultValue: ""},
-  {name: "category", title: "Kategori", type: "text", placeholder: "Kategori", defaultValue: ""},
   {name: "rent_price", title: "Harga Sewa", type: "text", placeholder: "20000", defaultValue: 0},
   {name: "sell_price", title: "Harga Jual", type: "text", placeholder: "20000", defaultValue: 0},
   {name: "jumlah_barang", title: "Jumlah Barang", type: "text", placeholder: "Jumlah Barang", defaultValue: 0},

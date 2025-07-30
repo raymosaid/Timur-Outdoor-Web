@@ -130,6 +130,7 @@ export const EditTransaction = ({ transaction, setIsEdit, setTransaction }) => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             name="name"
+            required
           />
         </div>
 
@@ -140,6 +141,7 @@ export const EditTransaction = ({ transaction, setIsEdit, setTransaction }) => {
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
             name="phone_number"
+            required
           />
         </div>
 
@@ -160,6 +162,7 @@ export const EditTransaction = ({ transaction, setIsEdit, setTransaction }) => {
             value={jaminan}
             onChange={(e) => setJaminan(e.target.value)}
             name="jaminan"
+            required
           />
         </div>
 

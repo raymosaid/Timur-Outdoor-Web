@@ -152,6 +152,7 @@ export const DetailJual = ({
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Nama"
+                      required
                     />
                   </div>
                   <div className="grid w-full max-w-sm items-center gap-2">
@@ -163,6 +164,7 @@ export const DetailJual = ({
                       value={phoneNumber}
                       onChange={(e) => setPhoneNumber(e.target.value)}
                       placeholder="08xxxxxxxxxx"
+                      required
                     />
                   </div>
                   <div>
@@ -188,15 +190,6 @@ export const DetailJual = ({
                       defaultValue={paymentMethod}
                       onChange={(e) => setPaymentMethod(e.target.value)}
                       placeholder="Metode Pembayaran" />
-                    {/* <Select value={paymentMethod} onValueChange={setPaymentMethod}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="CASH" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="CASH">CASH</SelectItem>
-                        <SelectItem value="TRANSFER">TRANSFER</SelectItem>
-                      </SelectContent>
-                    </Select> */}
                   </div>
                   <Input
                     name="total_amount"

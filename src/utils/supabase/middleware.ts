@@ -38,6 +38,11 @@ export const updateSession = async (request: NextRequest) => {
     // This will refresh session if expired - required for Server Components
     // https://supabase.com/docs/guides/auth/server-side/nextjs
     const user = await supabase.auth.getUser();
+    const { data: userProfile } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .single()
     const user_metadata = user.data.user?.user_metadata;
 
     // console.log("User Metadata in Middleware", user_metadata)
@@ -64,10 +69,10 @@ export const updateSession = async (request: NextRequest) => {
     //   return NextResponse.redirect(new URL("/sign-in", request.url));
     // }
 
-    // if (request.nextUrl.pathname === "/instruments" && user_metadata?.user_role !== "owner") {
-    //   console.log("User Owner False")
-    //   return NextResponse.redirect(new URL("/protected", request.url));
-    // }
+    if ((request.nextUrl.pathname === "/dashboard" || request.nextUrl.pathname === "/employee") && userProfile?.user_role !== "owner") {
+      console.log("User Owner False")
+      return NextResponse.redirect(new URL("/kasir", request.url));
+    }
 
     return response;
   } catch (e) {

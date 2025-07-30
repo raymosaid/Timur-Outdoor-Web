@@ -15,8 +15,9 @@ export const EditSellDetail = ({
 	const [updatedSellTransaction, setUpdatedSellTransaction] = useState(transaction)
 	const [pending, setPending] = useState(false)
 	const { toast } = useToast()
-	const onSaveChanges = async() => {
-		setPending(true)
+	const onSaveChanges = async(e) => {
+		e.preventDefault()
+    setPending(true)
 		const {data, error} = await updatedSellTransactionDetail(updatedSellTransaction)
 		console.log("update data", data)
 		if (!error) {
@@ -37,7 +38,7 @@ export const EditSellDetail = ({
 	}
 
   return (
-		<div className="flex flex-col flex-1">
+		<form onSubmit={onSaveChanges} className="flex flex-col flex-1">
       <div className="grid grid-cols-4 gap-6 mt-4">
 
         {/* Name */}
@@ -47,6 +48,7 @@ export const EditSellDetail = ({
             value={updatedSellTransaction.name}
             onChange={(e) => setUpdatedSellTransaction(prev => ({ ...prev, name: e.target.value }))}
             name="name"
+            required
           />
         </div>
 
@@ -57,6 +59,7 @@ export const EditSellDetail = ({
             value={updatedSellTransaction.phone_number}
             onChange={(e) => setUpdatedSellTransaction(prev => ({ ...prev, phone_number: e.target.value }))}
             name="phone_number"
+            required
           />
         </div>
 
@@ -97,8 +100,8 @@ export const EditSellDetail = ({
 
       <div className="mt-auto w-full flex flex-row gap-4">
         <Button onClick={() => setIsEdit(false)} variant="outline" className="w-1/3">Cancel</Button>
-        <Button onClick={() => onSaveChanges()} className="w-2/3" disabled={!!pending}>{pending ? "Loading..." : "Save Changes"}</Button>
+        <Button type="submit" className="w-2/3" disabled={!!pending}>{pending ? "Loading..." : "Save Changes"}</Button>
       </div>
-  	</div>
+  	</form>
   )
 }

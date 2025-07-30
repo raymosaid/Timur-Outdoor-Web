@@ -72,7 +72,7 @@ export default function Page() {
             <div className="text-lg font-semibold">Personal Info</div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="flex flex-col gap-2">
-                <Label>Username</Label>
+                <Label>Name</Label>
                 <Input
                   name="username"
                   defaultValue={userData ? userData.user_metadata.username : ""}

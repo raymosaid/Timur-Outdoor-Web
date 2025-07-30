@@ -6,21 +6,23 @@ import { CheckIcon, EyeIcon, EyeOffIcon, XIcon } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "../ui/button"
+import { createClient } from "@/utils/supabase/client"
+import { useToast } from "@/hooks/use-toast"
 
 export default function ChangePassword() {
   const id = useId()
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [isVisible, setIsVisible] = useState(false)
+  const [pending, setPending] = useState(false)
+  const supabase = createClient()
+  const { toast } = useToast()
 
   const toggleVisibility = () => setIsVisible((prevState) => !prevState)
 
   const checkStrength = (pass) => {
     const requirements = [
-      { regex: /.{8,}/, text: "At least 8 characters" },
-      { regex: /[0-9]/, text: "At least 1 number" },
-      { regex: /[a-z]/, text: "At least 1 lowercase letter" },
-      { regex: /[A-Z]/, text: "At least 1 uppercase letter" },
+      { regex: /.{6,}/, text: "At least 6 characters" }
     ]
 
     return requirements.map((req) => ({
@@ -30,29 +32,32 @@ export default function ChangePassword() {
   }
 
   const strength = checkStrength(password)
+  console.log("strength", strength)
 
-  const strengthScore = useMemo(() => {
-    return strength.filter((req) => req.met).length
-  }, [strength])
-
-  const getStrengthColor = (score) => {
-    if (score === 0) return "bg-border"
-    if (score <= 1) return "bg-red-500"
-    if (score <= 2) return "bg-orange-500"
-    if (score === 3) return "bg-amber-500"
-    return "bg-emerald-500"
-  }
-
-  const getStrengthText = (score) => {
-    if (score === 0) return "Enter a password"
-    if (score <= 2) return "Weak password"
-    if (score === 3) return "Medium password"
-    return "Strong password"
+  const changePassword = async() => {
+    setPending(true)
+    if(password === confirmPassword){
+      const { error } = await supabase.auth.updateUser({
+        password: password
+      })
+      if (!error) {
+        toast({
+          title: "Change Password Successful",
+          description: `Password telah berhasil diubah`
+        })
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Change Password Failed",
+          description: `Password gagal diubah`
+        })
+      }
+    }
+    setPending(false)
   }
 
   return (
-    <form>
-      
+    <div>
       <div className="flex flex-col gap-4 max-w-sm">
         {/* New Password */}
         <div className="*:not-first:mt-2">
@@ -116,27 +121,12 @@ export default function ChangePassword() {
 
       </div>
 
-      {/* Password strength indicator */}
-      <div
-        className="bg-border mt-3 mb-4 h-1 w-full overflow-hidden rounded-full"
-        role="progressbar"
-        aria-valuenow={strengthScore}
-        aria-valuemin={0}
-        aria-valuemax={4}
-        aria-label="Password strength"
-      >
-        <div
-          className={`h-full ${getStrengthColor(strengthScore)} transition-all duration-500 ease-out`}
-          style={{ width: `${(strengthScore / 4) * 100}%` }}
-        ></div>
-      </div>
-
       {/* Password strength description */}
       <p
         id={`${id}-description`}
-        className="text-foreground mb-2 text-sm font-medium"
+        className="text-foreground mb-2 mt-6 text-sm font-medium"
       >
-        {getStrengthText(strengthScore)}. Must contain:
+        Password must contain:
       </p>
 
       {/* Password requirements list */}
@@ -170,9 +160,11 @@ export default function ChangePassword() {
 
       <Button
         className="mt-4"
+        disabled={ pending || !strength[0].met || password !== confirmPassword }
+        onClick={() => changePassword()}
       >
         Change Password
       </Button>
-    </form>
+    </div>
   )
 }

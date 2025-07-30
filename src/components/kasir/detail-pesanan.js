@@ -19,6 +19,7 @@ import { NotaSewa } from "@/lib/nota-sewa"
 import { pdf } from "@react-pdf/renderer"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import { fetchProductList } from "@/lib/data"
+import DateAndTimePicker from "../date-and-time-picker"
 
 export const DetailPesanan = ({
   children,
@@ -195,6 +196,7 @@ export const DetailPesanan = ({
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Nama"
+                      required
                     />
                   </div>
                   <div className="grid w-full max-w-sm items-center gap-2">
@@ -206,6 +208,7 @@ export const DetailPesanan = ({
                       value={phoneNumber}
                       onChange={(e) => setPhoneNumber(e.target.value)}
                       placeholder="08xxxxxxxxxx"
+                      required
                     />
                   </div>
                   <div className="col-span-2">
@@ -267,6 +270,7 @@ export const DetailPesanan = ({
                       value={jaminan}
                       onChange={(e) => setJaminan(e.target.value)}
                       placeholder="KTP / SIM / KTM / NPWP"
+                      required
                     />
                   </div>
                   <div>

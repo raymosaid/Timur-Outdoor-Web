@@ -772,88 +772,97 @@ const DateTimePicker = React.forwardRef<Partial<DateTimePickerRef>, DateTimePick
     }
 
     return (
-      <Popover modal open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild disabled={disabled}>
-          <Button
-            variant="outline"
-            className={cn(
-              'w-full justify-start text-left font-normal',
-              !displayDate && 'text-muted-foreground',
-              className,
+      <div className='flex items-center gap-4'>
+        <Popover modal open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild disabled={disabled}>
+            <Button
+              variant="outline"
+              className={cn(
+                'w-full justify-start text-left font-normal',
+                !displayDate && 'text-muted-foreground',
+                className,
+              )}
+              ref={buttonRef}
+            >
+              <CalendarIcon className="mr-2 h-4 w-4" />
+              {displayDate ? (
+                format(
+                  displayDate,
+                  hourCycle === 24 ? initHourFormat.hour24 : initHourFormat.hour12,
+                  {
+                    locale: loc,
+                  },
+                )
+              ) : (
+                <span>{placeholder}</span>
+              )}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0">
+            <Calendar
+              mode="single"
+              selected={displayDate}
+              month={month}
+              onSelect={(newDate) => {
+                if (newDate) {
+                  newDate.setHours(
+                    month?.getHours() ?? 0,
+                    month?.getMinutes() ?? 0,
+                    month?.getSeconds() ?? 0,
+                  );
+                  onSelect(newDate);
+                }
+              }}
+              onMonthChange={handleMonthChange}
+              yearRange={yearRange}
+              locale={locale}
+              {...props}
+            />
+            {granularity !== 'day' && (
+              <div className="border-border border-t p-3">
+                <Input
+                  type="time"
+                  id="time"
+                  step="1"
+                  defaultValue={`${value?.getHours}:${value?.getMinutes}:${value?.getSeconds}`}
+                  value={`${value?.getHours}:${value?.getMinutes}:${value?.getSeconds}`}
+                  className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
+                  onChange={(e) => {
+                    const timeString = e.target.value;
+                    const [hours, minutes] = timeString.split(':');
+                    const updatedDate = value
+                    updatedDate?.setHours(parseInt(hours, 10))
+                    updatedDate?.setMinutes(parseInt(minutes, 10))
+                    updatedDate?.setSeconds(0);
+                    updatedDate?.setMilliseconds(0);
+                    console.log("updatedDate", updatedDate)
+                    onChange?.(updatedDate)
+                  }}
+                />
+              </div>
             )}
-            ref={buttonRef}
-          >
-            <CalendarIcon className="mr-2 h-4 w-4" />
-            {displayDate ? (
-              format(
-                displayDate,
-                hourCycle === 24 ? initHourFormat.hour24 : initHourFormat.hour12,
-                {
-                  locale: loc,
-                },
-              )
-            ) : (
-              <span>{placeholder}</span>
-            )}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto p-0">
-          <Calendar
-            mode="single"
-            selected={displayDate}
-            month={month}
-            onSelect={(newDate) => {
-              if (newDate) {
-                newDate.setHours(
-                  month?.getHours() ?? 0,
-                  month?.getMinutes() ?? 0,
-                  month?.getSeconds() ?? 0,
-                );
-                onSelect(newDate);
-              }
-            }}
-            onMonthChange={handleMonthChange}
-            yearRange={yearRange}
-            locale={locale}
-            {...props}
-          />
-          {granularity !== 'day' && (
-            <div className="border-border border-t p-3">
-              {/* <TimePicker
-                onChange={(value) => {
-                  onChange?.(value);
-                  setDisplayDate(value);
-                  if (value) {
-                    setMonth(value);
-                  }
-                }}
-                date={month}
-                hourCycle={hourCycle}
-                granularity={granularity}
-              /> */}
-              <Input
-                type="time"
-                id="time"
-                step="1"
-                defaultValue={`${value?.getHours}:${value?.getMinutes}:${value?.getSeconds}`}
-                value={`${value?.getHours}:${value?.getMinutes}:${value?.getSeconds}`}
-                className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
-                onChange={(e) => {
-                  const timeString = e.target.value;
-                  const [hours, minutes] = timeString.split(':');
-                  const updatedDate = value
-                  updatedDate?.setHours(parseInt(hours, 10))
-                  updatedDate?.setMinutes(parseInt(minutes, 10))
-                  updatedDate?.setSeconds(0);
-                  updatedDate?.setMilliseconds(0);
-                  console.log("updatedDate", updatedDate)
-                  onChange?.(updatedDate)
-                }}
-              />
-            </div>
-          )}
-        </PopoverContent>
-      </Popover>
+          </PopoverContent>
+        </Popover>
+        <Input
+          type="time"
+          id="time"
+          step="1"
+          defaultValue={`${value?.getHours}:${value?.getMinutes}:${value?.getSeconds}`}
+          value={`${value?.getHours}:${value?.getMinutes}:${value?.getSeconds}`}
+          className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
+          onChange={(e) => {
+            const timeString = e.target.value;
+            const [hours, minutes] = timeString.split(':');
+            const updatedDate = value
+            updatedDate?.setHours(parseInt(hours, 10))
+            updatedDate?.setMinutes(parseInt(minutes, 10))
+            updatedDate?.setSeconds(0);
+            updatedDate?.setMilliseconds(0);
+            console.log("updatedDate", updatedDate)
+            onChange?.(updatedDate)
+          }}
+        />
+      </div>
     );
   },
 );

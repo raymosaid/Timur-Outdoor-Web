@@ -26,7 +26,6 @@ export const EditProduct = ({ product, setListProduct }) => {
   
   const listInputEditProduct = [
     {name: "name", title: "Nama Produk", type: "text", placeholder: "Nama Produk", defaultValue: product.name, value: name, setState: setName},
-    {name: "category", title: "Kategori", type: "text", placeholder: "Kategori", defaultValue: product.category, value: category, setState: setCategory},
     {name: "rent_price", title: "Harga Sewa", type: "number", placeholder: formatCurrency(20000), defaultValue: product.rent_price, value: rentPrice, setState: setRentPrice},
     {name: "sell_price", title: "Harga Jual", type: "number", placeholder: formatCurrency(20000), defaultValue: product.sell_price??0, value: sellPrice, setState: setSellPrice},
     {name: "jumlah_barang", title: "Jumlah Barang", type: "number", placeholder: "Jumlah Barang", defaultValue: product.jumlah_barang, value: jumlahBarang, setState: setJumlahBarang},
