@@ -41,11 +41,9 @@ export const updateSession = async (request: NextRequest) => {
     const { data: userProfile } = await supabase
       .from("profiles")
       .select("*")
-      .eq("id", user.id)
+      .eq("id", user.data?.user?.id)
       .single()
     const user_metadata = user.data.user?.user_metadata;
-
-    // console.log("User Metadata in Middleware", user_metadata)
 
     // not auth pages
     const notAuthPages = [
@@ -70,7 +68,6 @@ export const updateSession = async (request: NextRequest) => {
     // }
 
     if ((request.nextUrl.pathname === "/dashboard" || request.nextUrl.pathname === "/employee") && userProfile?.user_role !== "owner") {
-      console.log("User Owner False")
       return NextResponse.redirect(new URL("/kasir", request.url));
     }
 

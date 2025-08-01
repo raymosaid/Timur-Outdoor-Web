@@ -4,13 +4,16 @@ import { useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
+import { useToast } from "@/hooks/use-toast";
+import { fetchEmployee } from "@/lib/data";
 
-export default function SignUpDialog() {
+export default function SignUpDialog({setOpen, setEmployee}) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  const { toast } = useToast()
 
   const handleSignUp = async (e) => {
     e.preventDefault()
@@ -30,9 +33,27 @@ export default function SignUpDialog() {
         password,
         options: {
           emailRedirectTo: `${window.location.origin}/protected`,
+          data: {
+            user_role: "pegawai"
+          }
         },
       })
       if (error) throw error
+
+      if (!error) {
+          toast({
+            title: "Tambah Akun Berhasil",
+            description: `Silahkan cek email anda dan lakukan verifikasi`,
+          })
+          setOpen(false)
+          fetchEmployee(setEmployee)
+        } else {
+          toast({
+            variant: "destructive",
+            title: "Tambah Akun Gagal",
+            description: "Terjadi kesalahan saat menambahkan akun"
+          })
+        }
       
       // router.push('/auth/sign-up-success')
     } catch (error) {

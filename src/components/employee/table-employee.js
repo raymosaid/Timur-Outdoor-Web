@@ -3,15 +3,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { fetchEmployee } from "@/lib/data"
 import { Banknote, TrashIcon } from "lucide-react"
 import { HeaderContext } from "@/app/(main)/provider"
+import { DeleteUser } from "@/components/employee/delete-user"
 
-export const TableEmployee = () => {
+export const TableEmployee = ({employee, setEmployee}) => {
   const { headerInput } = useContext(HeaderContext)
   const cellName = ["No.", "Nama Pegawai", "Email", "Jabatan", "Nomor Telepon", "Action"]
-  const [employee, setEmployee] = useState(null)
-
-  useEffect(() => {
-    fetchEmployee(setEmployee)
-  }, [])
 
   return (
     <Table>
@@ -30,13 +26,10 @@ export const TableEmployee = () => {
             <TableCell>{item.email}</TableCell>
             <TableCell>{item.user_role}</TableCell>
             <TableCell>{item.phone_number}</TableCell>
-            <TableCell className="flex justify-center gap-6">
-              <button>
-                <Banknote />
-              </button>
-              <button>
+            <TableCell className="flex justify-center gap-6"> 
+              <DeleteUser idUser={item.id} setEmployee={setEmployee}>
                 <TrashIcon color="red" />
-              </button>
+              </DeleteUser>
             </TableCell>
           </TableRow>
         ))}

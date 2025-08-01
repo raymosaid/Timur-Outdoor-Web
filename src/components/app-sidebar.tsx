@@ -24,7 +24,6 @@ import { useEffect, useState } from "react";
 export default function AppSidebar() {
   const pathname = usePathname()
   const { data } = useUserData()
-  console.log("user", data)
 
   const [restrictSideBar, setRestrictSideBar] = useState([])
   useEffect(() => {
