@@ -278,7 +278,7 @@ export const EditItems = ({ transaction, setTransaction }) => {
                 </div>
               ))}
             </div>
-            <Button className="mt-auto" onClick={saveChanges} disabled={arraysEqualDeep(listItems, listItemOrder) || !!pending}>{!!pending ? "Loading..." : "Save Changes"}</Button>
+            <Button className="mt-auto" onClick={saveChanges} disabled={arraysEqualDeep(listItems, listItemOrder) || !!pending || !listItemOrder.length > 0}>{!!pending ? "Loading..." : "Save Changes"}</Button>
           </div>
         
         </div>

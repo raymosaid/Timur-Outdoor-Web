@@ -11,10 +11,10 @@ import { HeaderContext } from "@/app/(main)/provider";
 
 
 const listInputAddProduct = [
-  {name: "name", title: "Nama Produk", type: "text", placeholder: "Nama Produk", defaultValue: ""},
-  {name: "rent_price", title: "Harga Sewa", type: "text", placeholder: "20000", defaultValue: 0},
-  {name: "sell_price", title: "Harga Jual", type: "text", placeholder: "20000", defaultValue: 0},
-  {name: "jumlah_barang", title: "Jumlah Barang", type: "text", placeholder: "Jumlah Barang", defaultValue: 0},
+  {name: "name", title: "Nama Produk", type: "text", placeholder: "Nama Produk", defaultValue: "", required: true},
+  {name: "rent_price", title: "Harga Sewa", type: "number", placeholder: "20000", defaultValue: 0, required: true},
+  {name: "sell_price", title: "Harga Jual", type: "number", placeholder: "20000", defaultValue: 0, required: true},
+  {name: "jumlah_barang", title: "Jumlah Barang", type: "number", placeholder: "0 pcs", defaultValue: 0, required: true},
 ]
 
 export default function AddProductDialogue({ children, setListProduct }) {
@@ -89,6 +89,12 @@ export default function AddProductDialogue({ children, setListProduct }) {
                     name={item.name}
                     type={item.type}
                     placeholder={item.placeholder}
+                    required={item.required}
+                    onInvalid={(e) => {
+                      if (item.name === "rent_price") e.target.setCustomValidity("Silahkan isi dengan 0 jika bukan barang sewa");
+                      if (item.name === "sell_price") e.target.setCustomValidity("Silahkan isi dengan 0 jika bukan barang jual");
+                    }}
+                    onInput={(e) => e.target.setCustomValidity("")}
                   />
                 </div>
               ))}
