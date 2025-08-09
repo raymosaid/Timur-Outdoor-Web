@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useToast } from "@/hooks/use-toast"
 import { getImageData } from "@/lib/utils"
 import { createClient } from "@/utils/supabase/client"
 import { useEffect, useState } from "react"
@@ -15,6 +16,8 @@ import { useEffect, useState } from "react"
 export default function Page() {
   const [userData, setUserData] = useState(null)
   const [imagePreview, setImagePreview] = useState("")
+  const [pending, setPending] = useState(false)
+  const { toast } = useToast()
 
   useEffect(() => {
     const fetchUserData = async() => {
@@ -27,9 +30,24 @@ export default function Page() {
 
   const onSubmit = async(e) => {
     e.preventDefault()
+    setPending(true)
     const form = new FormData(e.target)
     const response = await updateUserProfile(form)
     console.log(response)
+    setPending(false)
+
+    if (response.status === "success") {
+      toast({
+        title: "Edit Profile Successful",
+        description: "Akun telah berhasil diubah",
+      })
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Failed To Update Profile",
+        description: "Akun gagal diupdate"
+      })
+    }
   }
 
   const onSubmitChangePassword = async(e) => {

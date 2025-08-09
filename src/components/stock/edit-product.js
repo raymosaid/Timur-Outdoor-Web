@@ -25,10 +25,10 @@ export const EditProduct = ({ product, setListProduct }) => {
   const [barangTersedia, setBarangTersedia] = useState(product.barang_tersedia)
   
   const listInputEditProduct = [
-    {name: "name", title: "Nama Produk", type: "text", placeholder: "Nama Produk", defaultValue: product.name, value: name, setState: setName/*, required: true*/},
-    {name: "rent_price", title: "Harga Sewa", type: "number", placeholder: formatCurrency(20000), defaultValue: product.rent_price, value: rentPrice, setState: setRentPrice/*, required: true*/},
-    {name: "sell_price", title: "Harga Jual", type: "number", placeholder: formatCurrency(20000), defaultValue: product.sell_price??0, value: sellPrice, setState: setSellPrice/*, required: true*/},
-    {name: "jumlah_barang", title: "Jumlah Barang", type: "number", placeholder: "Jumlah Barang", defaultValue: product.jumlah_barang, value: jumlahBarang, setState: setJumlahBarang/*, required: true*/},
+    {name: "name", title: "Nama Produk", type: "text", placeholder: "Nama Produk", defaultValue: product.name, value: name, setState: setName, required: true},
+    {name: "rent_price", title: "Harga Sewa", type: "number", placeholder: formatCurrency(20000), defaultValue: product.rent_price, value: rentPrice, setState: setRentPrice, required: true},
+    {name: "sell_price", title: "Harga Jual", type: "number", placeholder: formatCurrency(20000), defaultValue: product.sell_price??0, value: sellPrice, setState: setSellPrice, required: true},
+    {name: "jumlah_barang", title: "Jumlah Barang", type: "number", placeholder: "Jumlah Barang", defaultValue: product.jumlah_barang, value: jumlahBarang, setState: setJumlahBarang, required: true},
   ]
 
   const onSubmit = async(e) => {
@@ -158,13 +158,7 @@ export const EditProduct = ({ product, setListProduct }) => {
                     if (item.type === 'number' && !e.target.value) formattedValue = 0
                     item.setState(formattedValue)
                   }}
-                  
-                  // required={item.required}
-                  // onInvalid={(e) => {
-                  //     if (item.name === "rent_price") e.target.setCustomValidity("Silahkan isi dengan 0 jika bukan barang sewa");
-                  //     if (item.name === "sell_price") e.target.setCustomValidity("Silahkan isi dengan 0 jika bukan barang jual");
-                  //   }}
-                  // onInput={(e) => e.target.setCustomValidity("")}
+                  required={!!item.required}
                 />
               </div>
             ))}
@@ -178,9 +172,7 @@ export const EditProduct = ({ product, setListProduct }) => {
           >
             {!pending ? "Hapus Barang" : "Menyimpan..."}
           </Button>
-          <DialogClose>
-            <Button type="submit" disabled={pending}>{!pending ? "Simpan Perubahan" : "Menyimpan..."}</Button>
-          </DialogClose>
+          <Button type="submit" disabled={pending}>{!pending ? "Simpan Perubahan" : "Menyimpan..."}</Button>
         </DialogFooter>
         </form>
       </DialogContent>

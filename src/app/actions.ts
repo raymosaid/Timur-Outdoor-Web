@@ -157,10 +157,10 @@ export const updateUserProfile = async (formData: FormData) => {
     
     if (errorUpdate) {
       console.error("Error update user profile", errorUpdate)
-      return errorUpdate
+      return {status: "failed", data: errorUpdate}
     }
 
-    return dataUpdate
+    return {status: "success", data: dataUpdate}
 
   } else {
     const { data, error } = await supabase
@@ -174,7 +174,7 @@ export const updateUserProfile = async (formData: FormData) => {
 
     if (error) {
       console.error("Upload error:", error.message);
-      return error;
+      return {status: "failed", data: error};
     }
 
     const { data: dataUpdate, error: errorUpdate } = await supabase.auth.updateUser({
@@ -187,11 +187,11 @@ export const updateUserProfile = async (formData: FormData) => {
     
     if (errorUpdate) {
       console.error("Error update user profile", errorUpdate)
-      return errorUpdate
+      return {status: "failed", data: errorUpdate}
     }
     
     console.log("Success updated user profile", dataUpdate)
-    return dataUpdate
+    return {status: "success", data: dataUpdate}
   }
 }
 
