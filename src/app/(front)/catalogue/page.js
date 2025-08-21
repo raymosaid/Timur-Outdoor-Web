@@ -53,8 +53,25 @@ export default function Page() {
       <Header />
       <div className="px-5 py-16 pt-0 mx-auto items-center md:max-w-4xl">
 
+        {/* Type Transaction */}
+        <div className="sticky top-0 pt-24 flex items-center justify-center z-50">
+          <div className="flex items-center rounded rounded-full bg-white border shadow-2xl border-primary w-fit p-1 gap-1 max-w-2xs overflow-auto">
+            {types.map((item, index) => (
+              <Fragment key={index}>
+                <Button
+                  variant="ghost"
+                  size="lg"
+                  onClick={() => setType(item.value)}
+                  className={`rounded rounded-full ease-in-out ${type === item.value && 'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground'} ${type !== item.value && 'hover:bg-primary hover:text-primary-foreground'}`}
+                >
+                  {item.label}
+                </Button>
+              </Fragment>
+            ))}
+          </div>
+        </div>
         {/* Category */}
-        <div className="sticky top-0 pt-28 flex items-center justify-center z-50">
+        {/* <div className="sticky top-0 pt-28 flex items-center justify-center z-50">
           <div className="flex items-center rounded rounded-full bg-white border border-primary w-fit p-1 gap-1 max-w-2xs overflow-auto shadow-xl">
             <span className="px-4 text-md hidden md:block">by Category</span>
             {categories.map((item, index) => (
@@ -77,15 +94,15 @@ export default function Page() {
           >
             <Search className="scale-150" />
           </Button>
-        </div>
+        </div> */}
 
         {/* Products */}
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4 mt-4">
           {/* {!!showProducts && showProducts.map((item, index) => ( */}
-          {type === "sewa" ? !loadingRents && rentProducts.map((item, index) => (
+          {type === "sewa" ? !!rentProducts && rentProducts.map((item, index) => (
             <Fragment key={index}>
               <ProductCard
-                product={item.product}
+                product={item}
                 type={type}
                 setItem={type === "sewa" ? setRentItemOrder : setSellItemOrder}
               />
@@ -101,23 +118,6 @@ export default function Page() {
           ))}
         </div>
 
-        {/* Type Transaction */}
-        <div className="sticky bottom-0 py-4 flex items-center justify-center z-50">
-          <div className="flex items-center rounded rounded-full bg-white border shadow-2xl border-primary w-fit p-1 gap-1 max-w-2xs overflow-auto">
-            {types.map((item, index) => (
-              <Fragment key={index}>
-                <Button
-                  variant="ghost"
-                  size="lg"
-                  onClick={() => setType(item.value)}
-                  className={`rounded rounded-full ease-in-out ${type === item.value && 'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground'} ${type !== item.value && 'hover:bg-primary hover:text-primary-foreground'}`}
-                >
-                  {item.label}
-                </Button>
-              </Fragment>
-            ))}
-          </div>
-        </div>
 
       </div>
       <Footer />

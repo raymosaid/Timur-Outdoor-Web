@@ -47,7 +47,7 @@ export const updateSession = async (request: NextRequest) => {
 
     // not auth pages
     const notAuthPages = [
-      "/sign-in", "/", "/api/auth/session", "/api/auth/_log"
+      "/sign-in", "/", "/api/auth/session", "/api/auth/_log", "/catalogue"
     ]
 
     if (request.nextUrl.pathname === "/sign-in" && !user.error) {
