@@ -292,6 +292,18 @@ export const addJualTransaction = async(transaction, items) => {
     .insert(items_order)
     .select()
 
+  await Promise.all(
+    items.map(item =>
+      supabase
+        .from("products")
+        .update({
+          jumlah_barang: item.product.jumlah_barang - item.quantity,
+        })
+        .eq("id", item.product.id)
+        .select()
+    )
+  )
+
   if (!errorItems) return {
     status: "200",
     data_transaction: dataTransaction,

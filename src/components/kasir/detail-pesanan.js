@@ -358,7 +358,7 @@ export const DetailPesanan = ({
                                 className="rounded-full"
                                 variant="outline"
                                 size="smallIcon"
-                                // disabled={item.quantity >= item.product.stock_quantity}
+                                disabled={item.quantity >= item.product.tersedia}
                                 onClick={() => addItemQuantity(item, index)}
                               >
                                 <PlusIcon />
@@ -435,7 +435,7 @@ export const DetailPesanan = ({
                     disabled={!listItemOrder.length > 0 || pending}
                     className="w-full"
                   >
-                    {pending ? "Loading..." : "Selesaikan Pembayaran"}
+                    {pending ? "Memproses pesanan..." : "Selesaikan Pembayaran"}
                   </Button>
                 </div>
                 

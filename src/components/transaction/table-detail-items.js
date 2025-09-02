@@ -10,9 +10,10 @@ export const TableDetailItems = ({
     {title: "Hari Sewa", value: `X ${transaction.hari_sewa}`},
     {title: "Sub Total", value: (listItems.reduce((acc, obj) => acc + obj.price_at_transaction * obj.quantity * transaction?.hari_sewa, 0))},
     {title: "Diskon", value: (transaction.discount)},
-    {title: "Denda", value: (transaction.denda)},
+    {title: "Denda", value: (transaction.transactions_payments.filter(d => d.type === "Denda").reduce((acc, obj) => acc + obj.amount, 0))},
     {title: "Total", value: (transaction.total_amount + transaction.denda)},
   ]
+  console.log(transaction.transactions_payments.filter(d => d.type === "Denda").reduce((acc, obj) => acc + obj.amount, 0))
   return (
     <Table>
       <TableHeader>

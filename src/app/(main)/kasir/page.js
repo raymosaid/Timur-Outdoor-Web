@@ -108,7 +108,7 @@ export default function Page() {
 
   const handleChangeQuantityInput = (item, input, index) => {
     let formattedValue = parseInt(input.replace(/\D/g, ''));
-    formattedValue = formattedValue > item.product.stock_quantity ? item.product.stock_quantity : formattedValue
+    formattedValue = formattedValue > item.product.tersedia ? item.product.tersedia : formattedValue
     formattedValue = formattedValue < 1 ? 1 : formattedValue
     formattedValue = !formattedValue ? 0 : formattedValue
     if (!isSelling) {
@@ -221,8 +221,8 @@ export default function Page() {
                 <div className="flex items-center w-full gap-3 mt-auto">
                   <Button
                     className="w-full"
-                    // disabled={listItemOrdered.find(d => d.product.id === item.id) || item.tersedia <= 0}
-                    disabled={listItemOrdered.find(d => d.product.id === item.id)}
+                    disabled={listItemOrdered.find(d => d.product.id === item.id) || item.tersedia <= 0}
+                    // disabled={listItemOrdered.find(d => d.product.id === item.id)}
                     onClick={() => {
                       handleAddProduct(item)
                       setHeaderInput("")
@@ -283,7 +283,7 @@ export default function Page() {
                               className="rounded-full"
                               variant="outline"
                               size="smallIcon"
-                              // disabled={item.quantity >= item.product.stock_quantity}
+                              disabled={item.quantity >= item.product.tersedia}
                               onClick={() => addItemQuantity(item, index)}
                             >
                               <PlusIcon />
@@ -366,7 +366,7 @@ export default function Page() {
                               className="rounded-full"
                               variant="outline"
                               size="smallIcon"
-                              // disabled={item.quantity >= item.product.stock_quantity}
+                              disabled={item.quantity >= item.product.tersedia}
                               onClick={() => addItemQuantity(item, index)}
                             >
                               <PlusIcon />

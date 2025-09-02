@@ -198,11 +198,14 @@ export default function Page() {
                     <DialogHeader>
                       <DialogTitle>Akhiri Transaksi</DialogTitle>
                     </DialogHeader>
-                    <div className="my-6">Pelanggan ini terkena denda, apakah anda yakin ingin mengakhiri transaksi ini??</div>
+                    <div className="my-6">Pelanggan ini terkena denda, apakah anda yakin ingin mengakhiri transaksi ini?? Silahkan tekan tombol "Bayar Denda" dan tambahkan "Pembayaran" khusus untuk membayar denda.</div>
                     <DialogFooter>
-                      <DialogClose asChild>
-                        <Button variant="">Cancel</Button>
-                      </DialogClose>
+                      <Button
+                        onClick={() => setIsEdit(true)}
+                        variant=""
+                      >
+                        {pending ? "Loading..." : "Bayar Denda"}
+                      </Button>
                       <Button
                         disabled={pending}
                         onClick={handleSelesai}

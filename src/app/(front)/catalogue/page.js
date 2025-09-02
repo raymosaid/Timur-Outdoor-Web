@@ -70,31 +70,6 @@ export default function Page() {
             ))}
           </div>
         </div>
-        {/* Category */}
-        {/* <div className="sticky top-0 pt-28 flex items-center justify-center z-50">
-          <div className="flex items-center rounded rounded-full bg-white border border-primary w-fit p-1 gap-1 max-w-2xs overflow-auto shadow-xl">
-            <span className="px-4 text-md hidden md:block">by Category</span>
-            {categories.map((item, index) => (
-              <Fragment key={index}>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setCategory(item.value)}
-                  className={`rounded rounded-full ease-in-out ${category === item.value && 'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground'} ${category !== item.value && 'hover:bg-primary hover:text-primary-foreground'}`}
-                >
-                  {item.label}
-                </Button>
-              </Fragment>
-            ))}
-          </div>
-          <Button
-            variant="icon"
-            size=""
-            className="py-0 bg-white"
-          >
-            <Search className="scale-150" />
-          </Button>
-        </div> */}
 
         {/* Products */}
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4 mt-4">

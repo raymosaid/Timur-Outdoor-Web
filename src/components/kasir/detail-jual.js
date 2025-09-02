@@ -144,7 +144,7 @@ export const DetailJual = ({
               <div className="w-1/2 flex flex-col gap-4 max-h-full">
                 <div className="grid lg:grid-cols-2 gap-4">
                   <div className="grid w-full max-w-sm items-center gap-2">
-                    <Label htmlFor="name">Nama Penyewa</Label>
+                    <Label htmlFor="name">Nama Pembeli</Label>
                     <Input
                       type="text"
                       id="name"
@@ -250,7 +250,7 @@ export const DetailJual = ({
                                 className="rounded-full"
                                 variant="outline"
                                 size="smallIcon"
-                                // disabled={item.quantity >= item.product.stock_quantity}
+                                disabled={item.quantity >= item.product.tersedia}
                                 onClick={() => addItemQuantity(item, index)}
                               >
                                 <PlusIcon />
@@ -298,7 +298,7 @@ export const DetailJual = ({
                     disabled={!listItemOrder.length > 0 || pending}
                     className="w-full"
                   >
-                    {pending ? "Loading..." : "Selesaikan Pembayaran"}
+                    {pending ? "Pesanan diproses..." : "Selesaikan Pembayaran"}
                   </Button>
                 </div>                
               </div>
